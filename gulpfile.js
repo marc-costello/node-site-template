@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     cache = require('gulp-cache'),
     livereload = require('gulp-livereload'),
     lr = require('tiny-lr'),
+    nodemon = require('gulp-nodemon'),
     server = lr();
 
 // Styles
@@ -60,21 +61,15 @@ gulp.task('default', ['clean'], function() {
 
 // Watch
 gulp.task('watch', function() {
+    nodemon({ script: 'app.js', ext: 'html js scss', ignore: ['ignored.js'] })
+        .on('restart', function() {
+            // Watch .scss files
+            gulp.watch('assets/styles/**/*.scss', ['styles']);
 
-    // Listen on port 35729
-    server.listen(3000, function (err) {
-        if (err) {
-            return console.log(err)
-        };
+            // Watch .js files
+            gulp.watch('assets/scripts/**/*.js', ['scripts']);
 
-        // Watch .scss files
-        gulp.watch('public/stylesheets/**/*.scss', ['styles']);
-
-        // Watch .js files
-        gulp.watch('public/javascripts/**/*.js', ['scripts']);
-
-        // Watch image files
-        gulp.watch('public/images/**/*', ['images']);
-
-    });
+            // Watch image files
+            gulp.watch('assets/images/**/*', ['images']);
+        });
 });
