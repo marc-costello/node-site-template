@@ -9,9 +9,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     notify = require('gulp-notify'),
     cache = require('gulp-cache'),
-    livereload = require('gulp-livereload'),
-    lr = require('tiny-lr'),
-    server = lr();
+    livereload = require('gulp-livereload')
 
 // Styles
 gulp.task('styles', function(){
@@ -60,19 +58,12 @@ gulp.task('default', ['clean'], function() {
 
 // Watch
 gulp.task('watch', function() {
-    // Listen on port 3000
-    server.listen(3000, function (err) {
-        if (err) {
-            return console.log(err)
-        };
+    // Watch .scss files
+    gulp.watch('assets/sass/**/*.scss', ['styles']);
 
-        // Watch .scss files
-        gulp.watch('assets/styles/**/*.scss', ['styles']);
+    // Watch .js files
+    gulp.watch('assets/scripts/**/*.js', ['scripts']);
 
-        // Watch .js files
-        gulp.watch('assets/scripts/**/*.js', ['scripts']);
-
-        // Watch image files
-        gulp.watch('assets/images/**/*', ['images']);
-    });
+    // Watch image files
+    gulp.watch('assets/images/**/*', ['images']);
 });
