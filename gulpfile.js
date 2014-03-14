@@ -14,6 +14,11 @@ var gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
     server = lr();
 
+// Files will be added in index order.
+var jsFiles = [
+    
+];
+
 // Styles
 gulp.task('styles', function(){
     return gulp.src('assets/sass/*.scss')
@@ -29,8 +34,8 @@ gulp.task('styles', function(){
 
 // Scripts
 gulp.task('scripts', function() {
-    return gulp.src('assets/scripts/**/*.js')
-        .pipe(concat('*.js'))
+    return gulp.src(jsFiles)
+        .pipe(concat('main.js'))
         .pipe(gulp.dest('public/scripts'))
         .pipe(rename({ suffix: '.min' }))
         .pipe(uglify())
